@@ -11,4 +11,20 @@ module.exports = {
       console.log("Note saved!");
     });
   },
+
+  getAllNotes(req, res) {
+    res.send('..')
+  },
+
+  getNote(req, res) {
+    res.send('..')
+  },
+
+  updateNote(req, res) {
+    res.send('..')
+  },
+
+  deleteNote(req, res) {
+    res.send('..')
+  },
 };
