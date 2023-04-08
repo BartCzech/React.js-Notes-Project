@@ -1,5 +1,7 @@
 // Test controller
 
-module.exports = function(req, res) {
-    res.send("Server running");
-}
+module.exports = {
+  homepage: function (req, res) {
+    res.send("Homepage running");
+  },
+};

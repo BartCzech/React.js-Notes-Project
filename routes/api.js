@@ -3,6 +3,6 @@ const router = express.Router;
 
 const testActions = require('../actions/api/test');
 
-router.get("/", testActions);
+router.get("/", testActions.homepage);
 
 module.exports = router;
