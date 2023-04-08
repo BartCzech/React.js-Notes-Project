@@ -5,8 +5,13 @@ class NoteActions {
     const title = req.body.title;
     const body = req.body.body;
 
-    const note = new Note({ title, body });
-    await note.save();
+    let note;
+    try {
+      note = new Note({ title, body });
+      await note.save();
+    } catch (err) {
+      return res.status(422).json({message: err.message});
+    }
 
     res.status(201).json(note);
   }
@@ -45,7 +50,7 @@ class NoteActions {
   async deleteNote(req, res) {
     const id = req.params.id;
     await Note.deleteOne({ _id: id });
-    res.status(204);
+    res.sendStatus(204);
   }
 };
 
