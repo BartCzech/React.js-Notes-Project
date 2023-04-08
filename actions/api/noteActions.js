@@ -42,9 +42,10 @@ class NoteActions {
     res.status(201).json(note);
   }
 
-  deleteNote(req, res) {
+  async deleteNote(req, res) {
     const id = req.params.id;
-    res.send('Note deleted. Note ID: ' + id)
+    await Note.deleteOne({ _id: id });
+    res.status(204);
   }
 };
 
