@@ -8,7 +8,7 @@ class NoteActions {
     const note = new Note({ title, body });
     await note.save();
 
-    res.status(200).json(note);
+    res.status(201).json(note);
   }
 
   async getAllNotes(req, res) {
@@ -24,12 +24,22 @@ class NoteActions {
 
   async getNote(req, res) {
     const id = req.params.id;
+    
     const note = await Note.findOne({ _id: id});
     res.status(200).json(note);
   }
 
-  updateNote(req, res) {
-    res.send('Note updated!')
+  async updateNote(req, res) {
+    const id = req.params.id;
+    const title = req.body.title;
+    const body = req.body.body;
+
+    const note = await Note.findOne({ _id: id });
+    note.title = title;
+    note.body = body;
+    await note.save();
+
+    res.status(201).json(note);
   }
 
   deleteNote(req, res) {
