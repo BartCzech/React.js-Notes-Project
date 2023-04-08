@@ -13,7 +13,7 @@ class NoteActions {
     const title = req.body.title;
     const body = req.body.body;
 
-    res.send('Note created! :) Title: ' + title + 'Body: ' + body);
+    res.send('Note created! :) Title: ' + title + ' Body: ' + body);
 
   }
 
