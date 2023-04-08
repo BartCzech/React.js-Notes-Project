@@ -3,7 +3,7 @@ const app = express();
 const config = require('./config');
 
 // db connection
-// require('./db/mongoose');
+require('./db/mongoose');
 
 // routes
 const apiRouter = require('./routes/api');
