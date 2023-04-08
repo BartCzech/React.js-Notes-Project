@@ -17,8 +17,15 @@ class NoteActions {
 
   }
 
-  getAllNotes(req, res) {
-    res.send('API working! :)')
+  async getAllNotes(req, res) {
+    let doc;
+    try {
+      doc = await Note.find({});
+    } catch (err) {
+      return res.status(500).json({message: err.message});
+    }
+    console.log(doc);
+    res.status(200).json(doc);
   }
 
   getNote(req, res) {
