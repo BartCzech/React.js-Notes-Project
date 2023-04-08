@@ -12,10 +12,10 @@ router.get("/notes/:id", noteActions.getNote);
 router.post("/notes", noteActions.saveNote);
 
 // Updating notes
-router.put("/notes", noteActions.updateNote);
+router.put("/notes/:id", noteActions.updateNote);
 
 // Deleting notes
-router.delete("/notes", noteActions.deleteNote);
+router.delete("/notes/:id", noteActions.deleteNote);
 
 
 module.exports = router;

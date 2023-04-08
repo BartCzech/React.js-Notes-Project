@@ -10,7 +10,10 @@ class NoteActions {
     // newNote.save().then(() => {
     //   console.log("Note saved!");
     // });
-    res.send('Note created! :)')
+    const title = req.body.title;
+    const body = req.body.body;
+
+    res.send('Note created! :) Title: ' + title + 'Body: ' + body);
 
   }
 
@@ -27,7 +30,8 @@ class NoteActions {
   }
 
   deleteNote(req, res) {
-    res.send('Note deleted')
+    const id = req.params.id;
+    res.send('Note deleted. Note ID: ' + id)
   }
 };
 
