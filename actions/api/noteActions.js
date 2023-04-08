@@ -28,8 +28,10 @@ class NoteActions {
     res.status(200).json(doc);
   }
 
-  getNote(req, res) {
-    res.send('Note info')
+  async getNote(req, res) {
+    const id = req.params.id;
+    const note = await Note.findOne({ _id: id});
+    res.status(200).json(note);
   }
 
   updateNote(req, res) {
