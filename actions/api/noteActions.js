@@ -1,20 +1,14 @@
 const Note = require("../../db/models/note");
 
 class NoteActions {
-  saveNote(req, res) {
-    // const newNote = new Note({ 
-    //   title: "Shopping list", 
-    //   body: "Meat yoghurt" 
-    // });
-
-    // newNote.save().then(() => {
-    //   console.log("Note saved!");
-    // });
+  async saveNote(req, res) {
     const title = req.body.title;
     const body = req.body.body;
 
-    res.send('Note created! :) Title: ' + title + ' Body: ' + body);
+    const note = new Note({ title, body });
+    await note.save();
 
+    res.status(200).json(note);
   }
 
   async getAllNotes(req, res) {
