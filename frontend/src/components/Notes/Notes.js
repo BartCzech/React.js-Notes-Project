@@ -4,25 +4,14 @@ import Note from "./Note/Note";
 import NewNote from "./NewNote/NewNote";
 import Modal from "react-modal";
 import EditNote from "../EditNote/EditNote";
-import axios from 'axios';
+import axios from '../../axios';
 
 class Notes extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      notes: [
-        {
-          id: "2323",
-          title: "Take a shower",
-          body: "Remember to use the special shampoo.",
-        },
-        {
-          id: "2324",
-          title: "Alışveriş yap",
-          body: "Süt, tereyağı, şerbet.",
-        },
-      ],
+      notes: [],
       showEditModal: false,
       editNote: {}
     };
@@ -33,24 +22,40 @@ class Notes extends React.Component {
   }
 
   async fetchNotes() {
-    const res = await axios.get('http://localhost:3001/api/notes');
-  }
+    const res = await axios.get('/notes');
+    const notes = res.data;
 
-  deleteNote(id) {
-    console.log("Deleting note: " + id);
-    const notes = [...this.state.notes].filter((note) => note.id !== id);
     this.setState({ notes });
   }
 
-  addNote(note) {
-    const notes = [...this.state.notes];
-    notes.push(note);
+  async deleteNote(_id) {
+    console.log("Deleting note: " + _id);
+    const notes = [...this.state.notes].filter((note) => note._id !== _id);
+    await axios.delete('/notes' + _id);
     this.setState({ notes });
   }
 
-  editNote(note) {
+  async addNote(note) {
     const notes = [...this.state.notes];
-    const index = notes.findIndex(x => x.id === note.id );
+    // add to backend
+    try {
+      const res = await axios.post('/notes', note);
+      const newNote = res.data;
+      // add to frontend
+      notes.push(newNote);
+      this.setState({ notes });
+    } catch (err) {
+      console.log(err.response.data.message);
+    };
+  }
+
+  async editNote(note) {
+    // edit backend
+    await axios.put('/notes/' + note._id, note);
+
+    // edit frontend
+    const notes = [...this.state.notes];
+    const index = notes.findIndex(x => x._id === note._id );
     if (index >= 0) {
       notes[index] = note;  
       this.setState({ notes });
@@ -78,19 +83,19 @@ class Notes extends React.Component {
           <EditNote 
             title={this.state.editNote.title}
             body={this.state.editNote.body}
-            id={this.state.editNote.id}
+            _id={this.state.editNote._id}
             onEdit={note => this.editNote(note)} />
           <button onClick={() => this.toggleModal()}>Cancel</button>
         </Modal>
 
         {this.state.notes.map((note) => (
           <Note
-            key={note.id}
+            key={note._id}
             title={note.title}
             body={note.body}
-            id={note.id}
+            _id={note._id}
             onEdit={(note) => this.editNoteHandler(note)}
-            onDelete={(id) => this.deleteNote(id)}
+            onDelete={(_id) => this.deleteNote(_id)}
           />
         ))}
       </div>
