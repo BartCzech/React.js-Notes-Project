@@ -6,24 +6,26 @@ class Notes extends React.Component {
   constructor(props) {
     super(props);
 
-    this.notes = [
-      {
-        id: "2323",
-        title: "Take a shower",
-        body: "Remember to use the special shampoo.",
-      },
-      {
-        id: "2324",
-        title: "Alışveriş yap",
-        body: "Süt, tereyağı, şerbet.",
-      },
-    ];
+    this.state = {
+      notes: [
+        {
+          id: "2323",
+          title: "Take a shower",
+          body: "Remember to use the special shampoo.",
+        },
+        {
+          id: "2324",
+          title: "Alışveriş yap",
+          body: "Süt, tereyağı, şerbet.",
+        },
+      ]
+    };
   }
 
   deleteNote(id) {
     console.log("Deleting note: " + id);
-    const notes = [...this.notes].filter(note => note.id !== id);
-    this.notes = notes;
+    const notes = [...this.state.notes].filter(note => note.id !== id);
+    this.setState({notes});
   }
 
   render() {
@@ -31,8 +33,9 @@ class Notes extends React.Component {
       <div>
         <p>My notes</p>
 
-        {this.notes.map((note) => (
+        {this.state.notes.map((note) => (
           <Note 
+            key={note.id}
             title={note.title} 
             body={note.body} 
             id={note.id} 
