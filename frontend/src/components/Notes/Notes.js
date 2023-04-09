@@ -1,6 +1,7 @@
 import React from "react";
 import "./Notes.css";
 import Note from "./Note/Note";
+import NewNote from "./NewNote/NewNote";
 
 class Notes extends React.Component {
   constructor(props) {
@@ -33,6 +34,7 @@ class Notes extends React.Component {
       <div>
         <p>My notes</p>
 
+        <NewNote />
         {this.state.notes.map((note) => (
           <Note 
             key={note.id}
