@@ -4,6 +4,7 @@ import Note from "./Note/Note";
 import NewNote from "./NewNote/NewNote";
 import Modal from "react-modal";
 import EditNote from "../EditNote/EditNote";
+import axios from 'axios';
 
 class Notes extends React.Component {
   constructor(props) {
@@ -25,6 +26,14 @@ class Notes extends React.Component {
       showEditModal: false,
       editNote: {}
     };
+  }
+
+  componentDidMount() {
+    this.fetchNotes();
+  }
+
+  async fetchNotes() {
+    const res = await axios.get('http://localhost:3001/api/notes');
   }
 
   deleteNote(id) {
