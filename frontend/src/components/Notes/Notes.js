@@ -19,14 +19,25 @@ class Notes extends React.Component {
       },
     ];
   }
+
+  deleteNote(id) {
+    console.log("Deleting note: " + id);
+    const notes = [...this.notes].filter(note => note.id !== id);
+    this.notes = notes;
+  }
+
   render() {
     return (
       <div>
         <p>My notes</p>
 
-        {this.notes.map((note) => {
-          return <Note title={note.title} body={note.body} id={note.id} />;
-        })}
+        {this.notes.map((note) => (
+          <Note 
+            title={note.title} 
+            body={note.body} 
+            id={note.id} 
+            onDelete = {(id) => this.deleteNote(id)} />
+        ))}
       </div>
     );
   }
