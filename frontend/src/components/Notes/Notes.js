@@ -23,6 +23,7 @@ class Notes extends React.Component {
         },
       ],
       showEditModal: false,
+      editNote: {}
     };
   }
 
@@ -45,14 +46,16 @@ class Notes extends React.Component {
       notes[index] = note;  
       this.setState({ notes });
     }
+    this.toggleModal();
   }
 
   toggleModal() {
     this.setState({showEditModal: !this.state.showEditModal});
   }
 
-  editNoteHandler() {
+  editNoteHandler(note) {
     this.toggleModal();
+    this.setState({ editNote: note })
   }
 
   render() {
@@ -64,7 +67,11 @@ class Notes extends React.Component {
 
         <Modal isOpen={this.state.showEditModal} contentLabel="Edit the note">
           <EditNote 
+            title={this.state.editNote.title}
+            body={this.state.editNote.body}
+            id={this.state.editNote.id}
             onEdit={note => this.editNote(note)} />
+          <button onClick={() => this.toggleModal()}>Cancel</button>
         </Modal>
 
         {this.state.notes.map((note) => (
