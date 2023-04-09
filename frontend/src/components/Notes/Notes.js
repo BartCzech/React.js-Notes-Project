@@ -2,7 +2,8 @@ import React from "react";
 import "./Notes.css";
 import Note from "./Note/Note";
 import NewNote from "./NewNote/NewNote";
-
+import Modal from "react-modal";
+import EditNote from "../EditNote/EditNote";
 
 class Notes extends React.Component {
   constructor(props) {
@@ -20,20 +21,38 @@ class Notes extends React.Component {
           title: "Alışveriş yap",
           body: "Süt, tereyağı, şerbet.",
         },
-      ]
+      ],
+      showEditModal: false,
     };
   }
 
   deleteNote(id) {
     console.log("Deleting note: " + id);
-    const notes = [...this.state.notes].filter(note => note.id !== id);
-    this.setState({notes});
+    const notes = [...this.state.notes].filter((note) => note.id !== id);
+    this.setState({ notes });
   }
 
   addNote(note) {
     const notes = [...this.state.notes];
     notes.push(note);
-    this.setState({notes});
+    this.setState({ notes });
+  }
+
+  editNote(note) {
+    const notes = [...this.state.notes];
+    const index = notes.findIndex(x => x.id === note.id );
+    if (index >= 0) {
+      notes[index] = note;  
+      this.setState({ notes });
+    }
+  }
+
+  toggleModal() {
+    this.setState({showEditModal: !this.state.showEditModal});
+  }
+
+  editNoteHandler() {
+    this.toggleModal();
   }
 
   render() {
@@ -41,16 +60,22 @@ class Notes extends React.Component {
       <div>
         <p>My notes</p>
 
-        <NewNote 
-          onAdd={(note) => this.addNote(note)} />
+        <NewNote onAdd={(note) => this.addNote(note)} />
+
+        <Modal isOpen={this.state.showEditModal} contentLabel="Edit the note">
+          <EditNote 
+            onEdit={note => this.editNote(note)} />
+        </Modal>
 
         {this.state.notes.map((note) => (
-          <Note 
+          <Note
             key={note.id}
-            title={note.title} 
-            body={note.body} 
-            id={note.id} 
-            onDelete = {(id) => this.deleteNote(id)} />
+            title={note.title}
+            body={note.body}
+            id={note.id}
+            onEdit={(note) => this.editNoteHandler(note)}
+            onDelete={(id) => this.deleteNote(id)}
+          />
         ))}
       </div>
     );

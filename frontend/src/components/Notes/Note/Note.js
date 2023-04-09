@@ -8,13 +8,21 @@ function Note(props) {
     setShowDesc(!showDesc);
   }
 
+  const editHandler = () => {
+    props.onEdit({
+      title: props.title,
+      body: props.body, 
+      id: props.id
+    });
+  }
+
   return (
     <div className="note">
       <p onClick={() => toggleDesc()}>{props.title}</p>
       {showDesc && (
         <div className="description">{props.body}</div>
       )}
-      <button>Edit</button>
+      <button onClick={editHandler}>Edit</button>
       <button 
         className="delete"
         onClick={() => props.onDelete(props.id)}>Delete</button>
