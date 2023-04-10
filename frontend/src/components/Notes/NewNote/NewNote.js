@@ -29,20 +29,20 @@ function NewNote(props) {
   return (
     showForm ? (
       <div className="note">
-        <label>Tytuł:</label>
+        <label>Title:</label>
         <input type="text" 
           value={title} 
           onChange={changeTitleHandler} />
 
-        <label>Opis:</label>
+        <label>Description:</label>
         <input type="text" 
           value={desc}
           onChange={changeDescHandler} />
 
-        <button onClick={() => addNote()}>Dodaj notatkę</button>
+        <button onClick={() => addNote()}>Add note</button>
       </div>
     ) : (
-      <button onClick={() => setShowForm(true)}>Nowa notatka</button>
+      <button onClick={() => setShowForm(true)}>New note</button>
     )
   );
 }
