@@ -52,17 +52,22 @@ class Notes extends React.Component {
   }
 
   async editNote(note) {
-    // edit backend
-    await axios.put('/notes/' + note._id, note);
-
-    // edit frontend
     const notes = [...this.state.notes];
-    const index = notes.findIndex(x => x._id === note._id );
-    if (index >= 0) {
-      notes[index] = note;  
-      this.setState({ notes });
+
+    // edit backend
+    try {
+      await axios.put('/notes/' + note._id, note);
+
+      // edit frontend
+      const index = notes.findIndex(x => x._id === note._id );
+      if (index >= 0) {
+        notes[index] = note;  
+        this.setState({ notes });
+      }
+      this.toggleModal();
+    } catch (err) {
+      NotificationManager.error(err.response.data.message); 
     }
-    this.toggleModal();
   }
 
   toggleModal() {
