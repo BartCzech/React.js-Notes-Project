@@ -33,7 +33,7 @@ class Notes extends React.Component {
   async deleteNote(_id) {
     console.log("Deleting note: " + _id);
     const notes = [...this.state.notes].filter((note) => note._id !== _id);
-    await axios.delete('/notes' + _id);
+    await axios.delete('/notes/' + _id);
     this.setState({ notes });
   }
 
