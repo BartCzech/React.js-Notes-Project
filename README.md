@@ -1,0 +1,1 @@
+A bit more advanced project. Mainly React.js and some CSS on the frontend side with some Node.js running in the backend, connected to MongoDB. Leave a trace of your presence: https://notes-react-frontend.onrender.com/
